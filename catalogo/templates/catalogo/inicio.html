@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio · Pure Warer{% endblock %}
+
+{% block content %}
+
+<!-- HERO PRINCIPAL -->
+<section class="hero">
+  <!-- LADO IZQUIERDO -->
+  <div class="hero-left">
+    <span class="hero-tag">Panel de gestión · Pure Warer</span>
+
+    <!-- Logo + texto -->
+    <div class="hero-brand">
+      <img src="{% static 'img/logo-purewarer.png' %}"
+           alt="Logo Pure Warer"
+           class="hero-logo-img">
+      <div class="hero-brand-text">
+        <span class="hero-brand-title">Pure Warer · Hecho en México</span>
+        <span class="hero-brand-subtitle">Tienda de ropa</span>
+      </div>
+    </div>
+
+    <h1>Bienvenido a nuestra tienda, puedes contactarnos vía WhatsApp mediante el botón de la derecha.</h1>
+
+    <!-- Botones -->
+    <div class="hero-buttons">
+      <a href="{% url 'lista_productos' %}" class="btn">
+        Ver catálogo
+      </a>
+
+      {% if user.is_authenticated %}
+        <a href="{% url 'lista_productos' %}" class="btn btn-outline">
+          Gestionar inventario
+        </a>
+      {% else %}
+        <a href="{% url 'portal_acceso' %}" class="btn btn-outline">
+          Entrar como administrador
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- LADO DERECHO: IMAGEN -->
+  <div class="hero-image">
+    <img src="{% static 'img/hero-purewarer.jpg' %}"
+         alt="Pure Warer - Tienda de ropa"
+    >
+  </div>
+</section>
+
+
+<!-- SECCIÓN CATEGORÍAS DESTACADAS -->
+<section class="seccion-categorias">
+  <h2>Categorías destacadas</h2>
+  <p class="seccion-subtitulo">
+    Explora algunas secciones de ejemplo que puedes usar para tus prácticas.
+  </p>
+
+  <div class="categorias-grid">
+    <article class="categoria-card">
+      <img src="{% static 'img/cat-casual.png' %}" alt="Ropa casual">
+      <h3>Ropa casual</h3>
+      <p>Playeras, jeans y prendas básicas para el día a día.</p>
+    </article>
+
+    <article class="categoria-card">
+      <img src="{% static 'img/cat-deportiva.png' %}" alt="Ropa deportiva">
+      <h3>Ropa deportiva</h3>
+      <p>Outfits cómodos para entrenar, correr o ir al gimnasio.</p>
+    </article>
+
+    <article class="categoria-card">
+      <img src="{% static 'img/cat-formal.png' %}" alt="Ropa formal">
+      <h3>Ropa formal</h3>
+      <p>Camisas, sacos y pantalones para ocasiones especiales.</p>
+    </article>
+  </div>
+</section>
+
+{% endblock %}

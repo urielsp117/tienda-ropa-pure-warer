@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Mis pedidos · Pure Warer{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Mis pedidos</h1>
+
+{% if pedidos %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in pedidos %}
+          <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.creado_en|date:"d/m/Y H:i" }}</td>
+            <td>${{ p.total }}</td>
+            <td>{{ p.get_estado_pedido_display }}</td>
+            <td>
+              <a href="{% url 'detalle_pedido' p.id %}" class="btn btn-sm btn-outline-dark">
+                Ver detalle
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p>No tienes pedidos registrados aún.</p>
+{% endif %}
+
+{% endblock %}

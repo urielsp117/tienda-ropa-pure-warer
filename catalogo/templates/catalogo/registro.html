@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crear cuenta</title>
+  <link rel="stylesheet" href="/static/css/tienda.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Crear cuenta</h1>
+
+    <form method="post" class="card">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Registrarme</button>
+    </form>
+
+    <p style="margin-top: 1rem;">
+      ¿Ya tienes cuenta?
+      <a href="{% url 'login' %}">Inicia sesión</a>
+    </p>
+  </main>
+</body>
+</html>

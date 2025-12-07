@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="catalogo-header">
+    <h1>Inventario de productos</h1>
+
+    {% if categorias %}
+    <form method="GET" class="filtros-form">
+        <label>Categoría:</label>
+        <select name="categoria" onchange="this.form.submit()">
+            <option value="">Todas</option>
+            {% for c in categorias %}
+                <option value="{{ c }}" {% if categoria_actual == c %}selected{% endif %}>
+                    {{ c }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    {% endif %}
+
+    {% if user.is_staff %}
+    <a href="{% url 'admin:catalogo_producto_add' %}" class="btn btn-green">
+        ➕ Agregar producto
+    </a>
+    {% endif %}
+</section>
+
+<section class="grid-productos">
+
+    {% for p in productos %}
+    <article class="producto-card">
+
+        {% if p.imagen %}
+            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+        {% else %}
+            <div class="producto-placeholder">
+                <span>Sin imagen</span>
+            </div>
+        {% endif %}
+
+        <div class="producto-info">
+            <h3>{{ p.nombre }}</h3>
+
+            {% if p.categoria %}
+                <p class="categoria">{{ p.categoria }}</p>
+            {% endif %}
+
+            <p class="precio">${{ p.precio }}</p>
+            <p class="stock">Stock: {{ p.stock }}</p>
+
+            <div class="acciones-card">
+                <a href="{% url 'detalle_producto' p.id %}" class="btn-detalle">
+                    Ver detalle
+                </a>
+            </div>
+        </div>
+
+    </article>
+    {% empty %}
+        <p>No hay productos registrados.</p>
+    {% endfor %}
+
+</section>
+
+{% endblock %}

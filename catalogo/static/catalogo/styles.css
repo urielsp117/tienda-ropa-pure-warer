@@ -1,0 +1,262 @@
+:root{
+  --brand1: #5b67f1;
+  --brand2: #121212;
+  --soft: #f3f4f6;
+}
+
+body{
+  background-color: #f8f9fb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================== NAVBAR ================== */
+.main-navbar{
+  background: linear-gradient(90deg, var(--brand1), #7a86ff);
+}
+
+/* ================== HERO ================== */
+.hero-section{
+  background: radial-gradient(1000px 500px at -10% -20%, #e8ebff 0%, transparent 60%),
+              radial-gradient(800px 400px at 110% 0%, #eef0ff 0%, transparent 60%),
+              #ffffff;
+  border: 1px solid #eaecf0;
+  border-radius: 15px;
+}
+.glass-card{
+  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,.7);
+  border: 1px solid #eaecf0;
+}
+
+/* ================== CATEGORÍAS ================== */
+.category-tile{
+  display:block;
+  padding:14px 16px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #eaecf0;
+  text-decoration:none;
+  color:#111;
+  font-weight:600;
+  transition:.2s ease;
+}
+.category-tile i{ margin-right:8px; }
+.category-tile:hover{
+  transform: translateY(-2px);
+  border-color:#d9dbdf;
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+
+/* ================== CARDS DE PRODUCTO ================== */
+.product-card{
+  border:1px solid #eaecf0;
+  border-radius:16px;
+  overflow:hidden;
+}
+.product-img{
+  height:200px;
+  object-fit:cover;
+  background:#fafafa;
+}
+.product-img.placeholder{
+  height:200px;
+  background: repeating-linear-gradient(45deg, #fafafa, #fafafa 10px, #f3f4f6 10px, #f3f4f6 20px);
+}
+.price-tag{
+  font-weight:800;
+  letter-spacing:.3px;
+}
+
+/* Miniatura en el carrito */
+.carrito-thumb {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.placeholder-img {
+    width: 70px;
+    height: 70px;
+    background: #ddd;
+}
+
+/* ================== CHECKOUT ================== */
+.checkout-wrapper {
+    max-width: 1100px;
+    margin: 2rem auto 3rem;
+}
+
+.checkout-header {
+    margin-bottom: 1.5rem;
+}
+
+.checkout-title {
+    font-size: 1.9rem;
+    margin-bottom: .2rem;
+}
+
+.checkout-subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: .95rem;
+}
+
+.checkout-card,
+.checkout-summary {
+    border-radius: 1.4rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.checkout-card .form-control,
+.checkout-card .form-select,
+.checkout-card textarea {
+    border-radius: .75rem;
+    font-size: .95rem;
+}
+
+.checkout-items .list-group-item {
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.checkout-items .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.checkout-status {
+    font-size: .9rem;
+}
+
+/* ================== DETALLE DE PEDIDO (NUEVO) ================== */
+
+.pedido-container {
+    max-width: 1100px;
+    margin: 2rem auto 3rem;
+    padding: 0 1rem;
+}
+
+/* Card de encabezado */
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.8rem;
+    border-radius: 12px;
+    background: #ffffff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    border: 1px solid #e5e7eb;
+}
+
+.header-left {
+    max-width: 60%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Imagen pequeña del pedido */
+.pedido-img {
+    max-width: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0px 6px 25px rgba(0,0,0,0.2);
+}
+
+/* Textos de estado */
+.estado-text {
+    color: #16a34a;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.mensaje {
+    color: #6b7280;
+}
+
+/* Grilla de tarjetas de pedido */
+.pedido-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1.5rem;
+}
+
+.pedido-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+}
+
+/* Items del resumen */
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background: #f9fafb;
+    border: none;
+}
+
+.texto-secundario {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.precio-item {
+    font-weight: 600;
+    color: #16a34a;
+}
+
+/* Total */
+.total-box {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.precio-total {
+    font-size: 1.5rem;
+    color: #22c55e;
+    font-weight: 700;
+}
+
+/* Responsive detalle pedido */
+@media (max-width: 900px) {
+    .pedido-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-left {
+        max-width: 100%;
+    }
+
+    .pedido-img {
+    max-width: 160px;
+    max-height: 160px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0px 6px 25px rgba(0,0,0,0.2);
+    }
+
+}
+
+/* Ajustes extra en móvil para margen general */
+@media (max-width: 768px) {
+    .checkout-wrapper {
+        margin-top: 1rem;
+    }
+}

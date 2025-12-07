@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ producto.nombre }} · Detalle{% endblock %}
+
+{% block content %}
+
+<div class="detalle-wrapper">
+
+    <div class="detalle-card">
+
+        <!-- Columna izquierda: imagen -->
+        <div class="detalle-imagen">
+            {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            {% else %}
+                <div class="producto-placeholder grande">
+                    <span>Sin imagen</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Columna derecha: info del producto -->
+        <div class="detalle-info">
+            <h1>{{ producto.nombre }}</h1>
+
+            {% if producto.categoria %}
+                <p class="text-muted mb-1">
+                    Categoría: <strong>{{ producto.categoria }}</strong>
+                </p>
+            {% endif %}
+
+            <p class="detalle-precio">${{ producto.precio }}</p>
+
+            <p class="detalle-stock">
+                Stock disponible: <strong>{{ producto.stock }}</strong> piezas
+            </p>
+
+            {% if producto.descripcion %}
+                <p class="mt-3">
+                    {{ producto.descripcion }}
+                </p>
+            {% endif %}
+
+            <!-- 🟢 FORMULARIO: TALLA + CANTIDAD + AGREGAR AL CARRITO -->
+            <form action="{% url 'agregar_al_carrito' producto.id %}" method="post" class="mt-4">
+                {% csrf_token %}
+
+                <!-- TALLAS -->
+                <div class="mb-3">
+                    <label for="talla" class="form-label">Talla</label>
+                    <select name="talla" id="talla" class="form-select" required>
+                        <option value="" disabled selected>Selecciona una talla</option>
+                        <option value="S">S - Chico</option>
+                        <option value="M">M - Mediano</option>
+                        <option value="L">L - Grande</option>
+                        <option value="XL">XL - Extra grande</option>
+                    </select>
+                </div>
+
+                <!-- CANTIDAD -->
+                <div class="mb-3">
+                    <label for="cantidad" class="form-label">Cantidad</label>
+                    <input type="number"
+                           name="cantidad"
+                           id="cantidad"
+                           class="form-control"
+                           min="1"
+                           max="{{ producto.stock }}"
+                           value="1"
+                           required>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-cart-plus"></i> Agregar al carrito
+                    </button>
+
+                    <a href="{% url 'lista_productos' %}" class="btn btn-outline-secondary btn-volver">
+                        Volver al catálogo
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

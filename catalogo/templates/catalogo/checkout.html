@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="checkout-wrapper">
+
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center checkout-header">
+    <div>
+      <h1 class="checkout-title">Finalizar compra</h1>
+      <p class="checkout-subtitle">
+        Revisa tus datos de envío y confirma tu pedido de Pure Warer.
+      </p>
+    </div>
+
+    <a href="{% url 'ver_carrito' %}" class="btn btn-outline-secondary d-none d-md-inline-flex">
+      Volver al carrito
+    </a>
+  </div>
+
+  <div class="row g-4">
+    
+    <!-- Columna izquierda: formulario -->
+    <div class="col-lg-7">
+      <div class="card checkout-card h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Datos de envío y contacto</h5>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger py-2">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Nombre completo</label>
+                {{ form.nombre_completo }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Correo electrónico</label>
+                {{ form.email }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                {{ form.telefono }}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Dirección completa</label>
+                {{ form.direccion }}
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Ciudad</label>
+                {{ form.ciudad }}
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                {{ form.estado }}
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Código postal</label>
+                {{ form.codigo_postal }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Método de pago</label>
+                {{ form.metodo_pago }}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Notas adicionales (opcional)</label>
+                {{ form.notas }}
+              </div>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row gap-2 mt-4">
+              <button type="submit" class="btn btn-success flex-fill">
+                Confirmar pedido
+              </button>
+              <a href="{% url 'ver_carrito' %}" class="btn btn-outline-secondary flex-fill d-md-none">
+                Volver al carrito
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: resumen del pedido -->
+    <div class="col-lg-5">
+      <div class="card checkout-summary h-100">
+        <div class="card-body">
+
+          <h5 class="card-title mb-3">Resumen del pedido</h5>
+
+          {% if items %}
+            <ul class="list-group mb-3 checkout-items">
+              {% for item in items %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="me-3">
+                    <div class="fw-semibold">
+                      {{ item.nombre }}
+                      {% if item.talla %}
+                        <span class="badge bg-light text-dark ms-1">Talla {{ item.talla }}</span>
+                      {% endif %}
+                    </div>
+                    <small class="text-muted">
+                      Cantidad: {{ item.cantidad }} · ${{ item.precio }} c/u
+                    </small>
+                  </div>
+                  <span class="fw-bold">${{ item.subtotal }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold">Total a pagar:</span>
+              <span class="fs-5 fw-bold text-success">${{ total }}</span>
+            </div>
+
+            <div class="checkout-status mt-3">
+              <span class="badge bg-warning text-dark me-1">Estado del pedido:</span>
+              <span class="fw-semibold text-muted">
+                Pendiente de pago / preparación
+              </span>
+            </div>
+
+          {% else %}
+            <p>No hay productos en el carrito.</p>
+          {% endif %}
+
+          <hr class="my-4">
+
+          <p class="text-muted small mb-1">
+            En una versión más avanzada podrías:
+          </p>
+          <ul class="small text-muted mb-0">
+            <li>Conectar un procesador de pagos (Stripe, PayPal, etc.).</li>
+            <li>Generar número de pedido y número de guía de envío.</li>
+            <li>Permitir al usuario ver el estatus de envío desde su cuenta.</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

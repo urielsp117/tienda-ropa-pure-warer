@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="detalle-wrapper">
+
+    <h1 class="mb-4"><i class="bi bi-cart-check"></i> Carrito de compras</h1>
+
+    {% if items %}
+
+    <div class="table-responsive">
+        <table class="table align-middle tabla-carrito shadow-sm rounded">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 250px;">Producto</th>
+                    <th class="text-center">Talla</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Precio unitario</th>
+                    <th class="text-center">Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items %}
+                <tr>
+
+                    <!-- IMAGEN + NOMBRE -->
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            {% if item.imagen_url %}
+                                <img src="{{ item.imagen_url }}" class="carrito-thumb rounded shadow-sm" alt="{{ item.nombre }}">
+                            {% else %}
+                                <div class="carrito-thumb placeholder-img rounded"></div>
+                            {% endif %}
+                            <strong>{{ item.nombre }}</strong>
+                        </div>
+                    </td>
+
+                    <!-- TALLA -->
+                    <td class="text-center">
+                        {% if item.talla %}
+                            {{ item.talla }}
+                        {% else %}
+                            Única
+                        {% endif %}
+                    </td>
+
+                    <!-- CANTIDAD -->
+                    <td class="text-center">
+                        {{ item.cantidad }}
+                    </td>
+
+                    <!-- PRECIO -->
+                    <td class="text-center">
+                        ${{ item.precio }}
+                    </td>
+
+                    <!-- SUBTOTAL -->
+                    <td class="text-center fw-bold">
+                        ${{ item.subtotal }}
+                    </td>
+
+                    <!-- ELIMINAR -->
+                    <td class="text-end">
+                        <a href="{% url 'eliminar_del_carrito' item.id %}"
+                           class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Quitar
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="text-end mt-3">
+        <h4 class="fw-bold">Total: ${{ total }}</h4>
+    </div>
+
+
+    <!-- BOTONES DE ACCIÓN -->
+    <div class="d-flex gap-3 mt-4">
+
+        <a href="{% url 'lista_productos' %}" class="btn btn-secondary">
+            <i class="bi bi-shop"></i> Seguir comprando
+        </a>
+
+        <a href="{% url 'vaciar_carrito' %}" class="btn btn-outline-danger">
+            <i class="bi bi-x-circle"></i> Vaciar carrito
+        </a>
+
+        <a href="{% url 'checkout_pedido' %}" class="btn btn-success ms-auto">
+            <i class="bi bi-credit-card"></i> Finalizar compra
+        </a>
+
+    </div>
+
+    {% else %}
+        <p class="mt-4">Tu carrito está vacío.</p>
+        <a href="{% url 'lista_productos' %}" class="btn btn-primary">
+            <i class="bi bi-bag"></i> Ir al catálogo
+        </a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

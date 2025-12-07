@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Pedido #{{ pedido.id }} · Pure Warer{% endblock %}
+
+{% block content %}
+
+<div class="pedido-wrapper">
+
+    <!-- HERO DEL PEDIDO (amplio + logo) -->
+    <div class="pedido-hero mb-4">
+        <!-- Columna izquierda: texto -->
+        <div class="hero-left">
+            <p class="mb-1 pedido-hero-tag">Pedido registrado</p>
+            <h2 class="mb-2">Pedido #{{ pedido.id }}</h2>
+            <p class="mb-3 pedido-hero-desc">
+                ¡Gracias por tu compra, {{ pedido.nombre_completo }}! Tu pedido ha sido recibido y está en proceso de preparación.
+            </p>
+
+            <a href="{% url 'lista_productos' %}" class="btn">
+                Volver al catálogo
+            </a>
+        </div>
+
+        <!-- Columna derecha: logo de la marca -->
+        <div class="hero-logo">
+            <img src="{% static 'img/logo-pure-warer.png' %}"
+                 alt="Pure Warer"
+                 class="pedido-hero-logo">
+        </div>
+    </div>
+
+    <!-- GRID PRINCIPAL -->
+    <div class="row g-4">
+
+        <!-- Resumen de artículos -->
+        <div class="col-md-6">
+            <div class="pedido-card card p-3 h-100">
+                <h5 class="mb-3">Resumen de los artículos</h5>
+
+                <div class="checkout-items">
+                    {% for item in items %}
+                        <div class="list-group-item d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="pedido-item-thumb-wrap">
+                                    {% if item.producto.imagen %}
+                                        <img src="{{ item.producto.imagen.url }}"
+                                             alt="{{ item.producto.nombre }}"
+                                             class="pedido-item-thumb">
+                                    {% else %}
+                                        <div class="pedido-item-thumb placeholder">
+                                            PW
+                                        </div>
+                                    {% endif %}
+
+                                    {% if item.cantidad > 1 %}
+                                        <span class="pedido-item-qty">x{{ item.cantidad }}</span>
+                                    {% endif %}
+                                </div>
+
+                                <div>
+                                    <strong>{{ item.producto.nombre }}</strong>
+                                    {% if item.talla %}
+                                        <span class="texto-secundario"> · Talla {{ item.talla }}</span>
+                                    {% endif %}
+                                    <div class="texto-secundario">
+                                        Cantidad: {{ item.cantidad }} · ${{ item.precio_unitario }} c/u
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="precio-item">
+                                ${{ item.subtotal }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 total-box">
+                    <span>Total pagado / a pagar:</span>
+                    <span class="precio-total">${{ pedido.total }}</span>
+                </div>
+
+                <p class="mt-2 texto-secundario mb-0">
+                    Estado del pedido: <strong>{{ pedido.get_estado_display }}</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Datos de envío -->
+        <div class="col-md-6">
+            <div class="pedido-card card p-3 h-100">
+                <h5 class="mb-3">Datos de envío</h5>
+
+                <p class="mb-1"><strong>Nombre:</strong> {{ pedido.nombre_completo }}</p>
+                <p class="mb-1"><strong>Correo:</strong> {{ pedido.email }}</p>
+                <p class="mb-3"><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+
+                <hr>
+
+                <p class="mb-1"><strong>Dirección:</strong><br>{{ pedido.direccion }}</p>
+                <p class="mb-1"><strong>Ciudad:</strong> {{ pedido.ciudad }}</p>
+                <p class="mb-1"><strong>Estado:</strong> {{ pedido.estado }}</p>
+                <p class="mb-3"><strong>Código postal:</strong> {{ pedido.codigo_postal }}</p>
+
+                <hr>
+
+                <p class="mb-1">
+                    <strong>Método de pago:</strong> {{ pedido.get_metodo_pago_display }}
+                </p>
+
+                {% if pedido.notas %}
+                    <p class="mt-3 texto-secundario mb-0">
+                        <strong>Notas del pedido:</strong><br>
+                        {{ pedido.notas }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Cajita de ideas futuras -->
+    <div class="pedido-card card p-3 mt-4">
+        <h6>En una versión avanzada podrías mostrar aquí:</h6>
+        <ul class="mb-0 texto-secundario">
+            <li>Número de guía de paquetería y estatus de envío (en tránsito, entregado, etc.).</li>
+            <li>Botón para descargar comprobante de compra en PDF.</li>
+            <li>Línea de tiempo del estado del pedido (Recibido → Preparando → Enviado → Entregado).</li>
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}
