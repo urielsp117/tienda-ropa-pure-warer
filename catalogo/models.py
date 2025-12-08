@@ -58,15 +58,13 @@ class Pedido(models.Model):
         ("cancelado", "Cancelado"),
     ]
 
-    # ============================
     # CÓDIGO ÚNICO DEL PEDIDO
-    # ============================
     codigo = models.CharField(
         max_length=25,
         unique=True,
         editable=False,
-        null=True,   # ✅ permite NULL en pedidos viejos
-        blank=True   # ✅ no exige formulario
+        null=True,
+        blank=True
     )
 
     usuario = models.ForeignKey(
@@ -99,7 +97,6 @@ class Pedido(models.Model):
 
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    # Estado del pedido
     estado_pedido = models.CharField(
         max_length=20,
         choices=ESTADO_CHOICES,
@@ -113,7 +110,6 @@ class Pedido(models.Model):
         return f"Pedido {self.codigo or self.id}"
 
     def save(self, *args, **kwargs):
-        # Solo generar código si el pedido es nuevo
         if not self.codigo:
             fecha = timezone.now().strftime("%Y%m%d")
             sufijo = uuid.uuid4().hex[:4].upper()

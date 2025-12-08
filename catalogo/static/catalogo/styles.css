@@ -9,12 +9,10 @@ body{
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ================== NAVBAR ================== */
 .main-navbar{
   background: linear-gradient(90deg, var(--brand1), #7a86ff);
 }
 
-/* ================== HERO ================== */
 .hero-section{
   background: radial-gradient(1000px 500px at -10% -20%, #e8ebff 0%, transparent 60%),
               radial-gradient(800px 400px at 110% 0%, #eef0ff 0%, transparent 60%),
@@ -28,7 +26,6 @@ body{
   border: 1px solid #eaecf0;
 }
 
-/* ================== CATEGORÍAS ================== */
 .category-tile{
   display:block;
   padding:14px 16px;
@@ -47,7 +44,6 @@ body{
   box-shadow:0 6px 20px rgba(0,0,0,.06);
 }
 
-/* ================== CARDS DE PRODUCTO ================== */
 .product-card{
   border:1px solid #eaecf0;
   border-radius:16px;
@@ -67,7 +63,6 @@ body{
   letter-spacing:.3px;
 }
 
-/* Miniatura en el carrito */
 .carrito-thumb {
     width: 70px;
     height: 70px;
@@ -81,7 +76,6 @@ body{
     background: #ddd;
 }
 
-/* ================== CHECKOUT ================== */
 .checkout-wrapper {
     max-width: 1100px;
     margin: 2rem auto 3rem;
@@ -131,7 +125,6 @@ body{
     font-size: .9rem;
 }
 
-/* ================== DETALLE DE PEDIDO (NUEVO) ================== */
 
 .pedido-container {
     max-width: 1100px;
@@ -139,7 +132,6 @@ body{
     padding: 0 1rem;
 }
 
-/* Card de encabezado */
 .header-card {
     display: flex;
     justify-content: space-between;
@@ -161,7 +153,6 @@ body{
     justify-content: center;
 }
 
-/* Imagen pequeña del pedido */
 .pedido-img {
     max-width: 180px;
     border-radius: 12px;
@@ -169,7 +160,6 @@ body{
     box-shadow: 0px 6px 25px rgba(0,0,0,0.2);
 }
 
-/* Textos de estado */
 .estado-text {
     color: #16a34a;
     font-weight: 600;
@@ -180,7 +170,6 @@ body{
     color: #6b7280;
 }
 
-/* Grilla de tarjetas de pedido */
 .pedido-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -195,7 +184,6 @@ body{
     border: 1px solid #e5e7eb;
 }
 
-/* Items del resumen */
 .resumen-item {
     display: flex;
     justify-content: space-between;
@@ -215,7 +203,6 @@ body{
     color: #16a34a;
 }
 
-/* Total */
 .total-box {
     display: flex;
     justify-content: space-between;
@@ -229,7 +216,6 @@ body{
     font-weight: 700;
 }
 
-/* Responsive detalle pedido */
 @media (max-width: 900px) {
     .pedido-grid {
         grid-template-columns: 1fr;
@@ -254,7 +240,6 @@ body{
 
 }
 
-/* Ajustes extra en móvil para margen general */
 @media (max-width: 768px) {
     .checkout-wrapper {
         margin-top: 1rem;

@@ -37,7 +37,7 @@ urlpatterns = [
         name="detalle_pedido",
     ),
 
-    # ✅ Confirmación por CÓDIGO (esta es la que faltaba)
+    # Confirmación por CÓDIGO
     path(
         "pedido/confirmacion/<str:codigo>/",
         views.pedido_confirmacion,

@@ -42,7 +42,7 @@
                 </p>
             {% endif %}
 
-            <!-- 🟢 FORMULARIO: TALLA + CANTIDAD + AGREGAR AL CARRITO -->
+            <!-- FORMULARIO -->
             <form action="{% url 'agregar_al_carrito' producto.id %}" method="post" class="mt-4">
                 {% csrf_token %}
 

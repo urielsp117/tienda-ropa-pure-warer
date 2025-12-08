@@ -77,7 +77,6 @@ urlpatterns = [
         name="pedido_confirmacion",
     ),
 
-    # 🔹 NUEVA RUTA: RASTREAR PEDIDO POR CÓDIGO
     path(
         "trackear-pedido/",
         catalogo_views.trackear_pedido,

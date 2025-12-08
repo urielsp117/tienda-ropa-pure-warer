@@ -42,7 +42,6 @@ def lista_productos(request):
 def detalle_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id, activo=True)
 
-    # Convertimos "S,M,L,XL" → ["S", "M", "L", "XL"]
     tallas = []
     if producto.tallas:
         tallas = [t.strip() for t in producto.tallas.split(",") if t.strip()]
@@ -68,7 +67,7 @@ def _obtener_items_carrito(request):
     return items, total
 
 
-# ========== CARRITO (USANDO SESIÓN) ==========
+# ========== CARRITO ==========
 
 def agregar_al_carrito(request, producto_id):
     if request.method != "POST":
@@ -87,10 +86,9 @@ def agregar_al_carrito(request, producto_id):
     if cantidad < 1:
         cantidad = 1
 
-    # Obtenemos el carrito desde la sesión
     carrito = request.session.get("carrito", {})
 
-    # ID único por producto + talla
+    # ID único por producto y talla
     clave_item = f"{producto.id}_{talla or 'unica'}"
 
     precio = float(producto.precio)
@@ -145,7 +143,7 @@ def vaciar_carrito(request):
     return redirect("ver_carrito")
 
 
-# ========== CHECKOUT / PEDIDO ==========
+# ========== CHECKOUT ==========
 
 def checkout_pedido(request):
     carrito = request.session.get("carrito", {})
@@ -160,14 +158,12 @@ def checkout_pedido(request):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    # Creamos el pedido
                     pedido = form.save(commit=False)
                     if request.user.is_authenticated:
                         pedido.usuario = request.user
                     pedido.total = total
-                    pedido.save()  # Aquí se genera automáticamente pedido.codigo
+                    pedido.save()
 
-                    # Creamos los items del pedido y actualizamos stock
                     for item in items:
                         producto = get_object_or_404(Producto, id=item["producto_id"])
 
@@ -178,7 +174,6 @@ def checkout_pedido(request):
                                 f"No hay suficiente stock de {producto.nombre}. "
                                 f"Disponible: {producto.stock}, solicitaste: {item['cantidad']}."
                             )
-                            # Forzamos rollback de la transacción
                             raise transaction.TransactionManagementError(
                                 "Stock insuficiente"
                             )
@@ -229,7 +224,7 @@ def checkout_pedido(request):
     return render(request, "catalogo/checkout.html", context)
 
 
-# ========== DETALLE DE PEDIDO (por ID) ==========
+# ========== DETALLE DE PEDIDO ==========
 
 def detalle_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
@@ -275,7 +270,7 @@ def mis_pedidos(request):
     return render(request, "catalogo/mis_pedidos.html", context)
 
 
-# ========== CONFIRMACIÓN DE PEDIDO (DESPUÉS DEL CHECKOUT) ==========
+# ========== CONFIRMACIÓN DE PEDIDO ==========
 
 def pedido_confirmacion(request, codigo):
     """
@@ -298,7 +293,7 @@ def pedido_confirmacion(request, codigo):
     return render(request, "catalogo/pedido_confirmacion.html", context)
 
 
-# ========== RASTREAR / TRACKEAR PEDIDO POR CÓDIGO ==========
+# ========== RASTREAR / TRACKEAR PEDIDO ==========
 
 def trackear_pedido(request):
     """
