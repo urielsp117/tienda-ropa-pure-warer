@@ -3,10 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Inicio
     path("", views.inicio, name="inicio"),
 
-    # Productos
     path("productos/", views.lista_productos, name="lista_productos"),
     path(
         "productos/<int:producto_id>/",
@@ -14,7 +12,6 @@ urlpatterns = [
         name="detalle_producto",
     ),
 
-    # Carrito
     path("carrito/", views.ver_carrito, name="ver_carrito"),
     path(
         "carrito/agregar/<int:producto_id>/",
@@ -28,7 +25,6 @@ urlpatterns = [
     ),
     path("carrito/vaciar/", views.vaciar_carrito, name="vaciar_carrito"),
 
-    # Checkout / pedidos
     path("checkout/", views.checkout_pedido, name="checkout_pedido"),
     path("mis-pedidos/", views.mis_pedidos, name="mis_pedidos"),
     path(
@@ -37,14 +33,12 @@ urlpatterns = [
         name="detalle_pedido",
     ),
 
-    # Confirmación por CÓDIGO
     path(
         "pedido/confirmacion/<str:codigo>/",
         views.pedido_confirmacion,
         name="pedido_confirmacion",
     ),
 
-    # Tracking por CÓDIGO
     path(
         "trackear-pedido/",
         views.trackear_pedido,
