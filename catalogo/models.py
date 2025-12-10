@@ -58,7 +58,6 @@ class Pedido(models.Model):
         ("cancelado", "Cancelado"),
     ]
 
-    # CÓDIGO ÚNICO DEL PEDIDO
     codigo = models.CharField(
         max_length=25,
         unique=True,
@@ -75,18 +74,15 @@ class Pedido(models.Model):
         related_name="pedidos",
     )
 
-    # Datos personales
     nombre_completo = models.CharField(max_length=150)
     email = models.EmailField()
     telefono = models.CharField(max_length=20)
 
-    # Envío
     direccion = models.CharField(max_length=255)
     ciudad = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
     codigo_postal = models.CharField(max_length=15)
 
-    # Pago
     metodo_pago = models.CharField(
         max_length=20,
         choices=METODO_PAGO_CHOICES,
