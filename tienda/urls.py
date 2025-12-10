@@ -10,14 +10,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # ===========================
-    # PORTAL
-    # ===========================
     path("", cuentas_views.portal_acceso, name="portal_acceso"),
 
-    # ===========================
-    # CATÁLOGO
-    # ===========================
     path("inicio/", catalogo_views.inicio, name="inicio"),
     path("productos/", catalogo_views.lista_productos, name="lista_productos"),
 
@@ -27,9 +21,6 @@ urlpatterns = [
         name="detalle_producto",
     ),
 
-    # ===========================
-    # CARRITO
-    # ===========================
     path("carrito/", catalogo_views.ver_carrito, name="ver_carrito"),
 
     path(
@@ -50,9 +41,6 @@ urlpatterns = [
         name="vaciar_carrito",
     ),
 
-    # ===========================
-    # CHECKOUT / PEDIDOS
-    # ===========================
     path(
         "checkout/",
         catalogo_views.checkout_pedido,
@@ -83,9 +71,6 @@ urlpatterns = [
         name="trackear_pedido",
     ),
 
-    # ===========================
-    # AUTH
-    # ===========================
     path(
         "login/",
         auth_views.LoginView.as_view(template_name="cuentas/login.html"),
@@ -100,9 +85,6 @@ urlpatterns = [
 
     path("registro/", cuentas_views.registro, name="registro"),
 
-    # ===========================
-    # INVITADO
-    # ===========================
     path(
         "invitado/",
         cuentas_views.continuar_como_invitado,
@@ -110,8 +92,5 @@ urlpatterns = [
     ),
 ]
 
-# ===========================
-# SERVIR MEDIA EN DESARROLLO
-# ===========================
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
