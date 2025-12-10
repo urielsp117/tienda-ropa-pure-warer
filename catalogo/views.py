@@ -7,13 +7,11 @@ from .models import Producto, Pedido, PedidoItem
 from .forms import PedidoCheckoutForm
 
 
-# ========== PÁGINA DE INICIO ==========
 
 def inicio(request):
     return render(request, "catalogo/inicio.html")
 
 
-# ========== LISTADO DE PRODUCTOS ==========
 
 def lista_productos(request):
     categoria = request.GET.get("categoria")
@@ -37,7 +35,6 @@ def lista_productos(request):
     return render(request, "catalogo/lista_productos.html", context)
 
 
-# ========== DETALLE DE PRODUCTO ==========
 
 def detalle_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id, activo=True)
@@ -53,7 +50,6 @@ def detalle_producto(request, producto_id):
     return render(request, "catalogo/detalle_producto.html", context)
 
 
-# ========== FUNCIONES AUXILIARES CARRITO ==========
 
 def _obtener_items_carrito(request):
     """
@@ -67,7 +63,6 @@ def _obtener_items_carrito(request):
     return items, total
 
 
-# ========== CARRITO ==========
 
 def agregar_al_carrito(request, producto_id):
     if request.method != "POST":
@@ -88,7 +83,6 @@ def agregar_al_carrito(request, producto_id):
 
     carrito = request.session.get("carrito", {})
 
-    # ID único por producto y talla
     clave_item = f"{producto.id}_{talla or 'unica'}"
 
     precio = float(producto.precio)
@@ -143,7 +137,6 @@ def vaciar_carrito(request):
     return redirect("ver_carrito")
 
 
-# ========== CHECKOUT ==========
 
 def checkout_pedido(request):
     carrito = request.session.get("carrito", {})
@@ -167,7 +160,6 @@ def checkout_pedido(request):
                     for item in items:
                         producto = get_object_or_404(Producto, id=item["producto_id"])
 
-                        # Validar stock
                         if producto.stock < item["cantidad"]:
                             messages.error(
                                 request,
@@ -178,11 +170,9 @@ def checkout_pedido(request):
                                 "Stock insuficiente"
                             )
 
-                        # Descontar stock
                         producto.stock -= item["cantidad"]
                         producto.save()
 
-                        # Crear PedidoItem
                         PedidoItem.objects.create(
                             pedido=pedido,
                             producto=producto,
@@ -191,21 +181,17 @@ def checkout_pedido(request):
                             precio_unitario=item["precio"],
                         )
 
-                    # Vaciar carrito
                     request.session["carrito"] = {}
                     request.session.modified = True
 
-                    # Mensaje con el código de pedido
                     messages.success(
                         request,
                         f"Tu pedido {pedido.codigo} se registró correctamente. "
                         "Guarda este código para consultar el estado de tu envío."
                     )
-                    # Ir a pantalla de confirmación
                     return redirect("pedido_confirmacion", codigo=pedido.codigo)
 
             except transaction.TransactionManagementError:
-                # Si algo falla en la transacción, regresamos al checkout
                 return redirect("checkout_pedido")
     else:
         initial = {}
@@ -224,12 +210,10 @@ def checkout_pedido(request):
     return render(request, "catalogo/checkout.html", context)
 
 
-# ========== DETALLE DE PEDIDO ==========
 
 def detalle_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
 
-    # Protección básica
     if pedido.usuario and request.user != pedido.usuario and not request.user.is_staff:
         messages.error(request, "No tienes permiso para ver este pedido.")
         return redirect("inicio")
@@ -259,7 +243,6 @@ def detalle_pedido(request, pedido_id):
     return render(request, "catalogo/detalle_pedido.html", context)
 
 
-# ========== LISTADO DE PEDIDOS DEL USUARIO ==========
 
 @login_required
 def mis_pedidos(request):
@@ -270,7 +253,6 @@ def mis_pedidos(request):
     return render(request, "catalogo/mis_pedidos.html", context)
 
 
-# ========== CONFIRMACIÓN DE PEDIDO ==========
 
 def pedido_confirmacion(request, codigo):
     """
@@ -293,7 +275,6 @@ def pedido_confirmacion(request, codigo):
     return render(request, "catalogo/pedido_confirmacion.html", context)
 
 
-# ========== RASTREAR / TRACKEAR PEDIDO ==========
 
 def trackear_pedido(request):
     """
