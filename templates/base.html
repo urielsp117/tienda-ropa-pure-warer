@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
 
     <style>
-        /* =====================================================
-            BOTÓN FLOTANTE PARA RASTREAR PEDIDO (AZUL)
-        ====================================================== */
         .floating-track {
             position: fixed;
             bottom: 150px;
@@ -61,7 +58,6 @@
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
     <header class="navbar">
         <div class="navbar-brand">
             <a href="{% url 'inicio' %}">Pure Warer</a>
@@ -91,19 +87,16 @@
         </div>
     </header>
 
-    <!-- ================ CONTENIDO ================ -->
     <main class="main-content">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- ============ CARRITO FLOTANTE ============ -->
     <a href="{% url 'ver_carrito' %}" class="floating-cart">
         <span class="floating-cart-icon">🛒</span>
         <span class="floating-cart-text">Ver carrito</span>
     </a>
 
-    <!-- ============ WHATSAPP FLOTANTE ============ -->
     <a href="https://wa.me/525528454114"
        target="_blank"
        class="floating-whatsapp">
@@ -111,7 +104,6 @@
         <span class="floating-whatsapp-text">Contáctanos</span>
     </a>
 
-    <!-- ============ BOTÓN FLOTANTE: RASTREAR PEDIDO ============ -->
     <a href="{% url 'trackear_pedido' %}"
        class="floating-track"
        title="Rastrear pedido">
@@ -119,7 +111,6 @@
         <span class="floating-track-text">Rastrear pedido</span>
     </a>
 
-    <!-- ================= FOOTER ================= -->
     <footer class="footer">
         <p>Pure Warer &copy; 2025 · Sistema académico UNITEC</p>
     </footer>
